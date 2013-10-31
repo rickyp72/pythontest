@@ -11,13 +11,19 @@ def retBanner(ip, port):
         return
         
 def checkVulns(banner):
-     if ("FreeFloat Ftp Server (Version 1.00)" in banner):
-         print "[+] FreeFloat FTP Server is vulnerable."
-     elif ("/tnftpd/ " in banner):
-         print "[+] tnftpd FTP Server is vulnerable."
-     else:
-         print "[-] FTP Server isn't vulnerable."       
-     return 
+    f = open("vuln_banners.txt",'r')
+    for line in f.readlines():
+        if line.strip('\n') in banner:
+            print "[+] Server is vulnerable: "+banner.strip('\n'')
+#         
+# def checkVulns(banner):
+#      if ("FreeFloat Ftp Server (Version 1.00)" in banner):
+#          print "[+] FreeFloat FTP Server is vulnerable."
+#      elif ("/tnftpd/ " in banner):
+#          print "[+] tnftpd FTP Server is vulnerable."
+#      else:
+#          print "[-] FTP Server isn't vulnerable."       
+#      return 
         
 # def main():
 #     ip1 = '172.16.0.10'
@@ -26,8 +32,8 @@ def checkVulns(banner):
     
 def main():
   portList = [21,22,25,80,110,443]
-  for x in range(1, 10):
-      ip = '192.168.95.' + str(x)
+  for x in range(1, 11):
+      ip = '172.16.0.' + str(x)
       for port in portList:
           print "checking " + ip + ': ' + str(port)
           banner = retBanner(ip, port)
